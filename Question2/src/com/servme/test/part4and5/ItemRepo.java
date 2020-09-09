@@ -1,28 +1,25 @@
 package com.servme.test.part4and5;
 
 import java.io.Closeable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 public class ItemRepo {
     private Set<Item> items = new HashSet<>();
-    private List<Listener> listeners = new ArrayList<>();
+    private static List<Listener> listeners = new ArrayList<>();
 
     public void removeItemById(int itemId){
         // TODO
         Item item = getItemById(itemId);
-        items.removeIf(i -> i.getId() == itemId);
+        items.removeIf(i -> Objects.equals(i.getId(), itemId));
         listeners.forEach( l -> l.itemRemoved(item));
     }
 
     public Item getItemById(int itemId){
         // TODO
-        return items.stream().filter(i -> itemId == i.getId()).findFirst().orElse(null);
+        return items.stream().filter(i -> Objects.equals(itemId, i.getId())).findFirst().orElse(null);
     }
 
     public Closeable addListener(Listener listener) {
@@ -30,13 +27,13 @@ public class ItemRepo {
         return listener;
     }
 
-    public void unregisterListener(Listener listener) {
+    public static void unregisterListener(Listener listener) {
         listeners.remove(listener);
     }
 
     public void putItem(Item item) {
         items.add(item);
-        listeners.forEach( l -> l.itemPut(item));
+        listeners.forEach(l -> l.itemPut(item));
     }
 
     public void putItem(Item item, CallBack callback){
@@ -51,8 +48,6 @@ public class ItemRepo {
             e.printStackTrace();
         }
     }
-
-
 
     private Future<Item> putItemAlt(Item item) {
         CompletableFuture<Item> completableFuture = new CompletableFuture<>();

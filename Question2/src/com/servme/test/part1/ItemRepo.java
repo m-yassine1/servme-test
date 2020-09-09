@@ -1,6 +1,7 @@
 package com.servme.test.part1;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 /*
  * To answer question 2, the item will be inserted as a new item because methods hashCode and equals are not overridden.
@@ -18,11 +19,11 @@ public class ItemRepo {
 
     public void removeItemById(int itemId){
         // TODO
-        items.removeIf(i -> i.getId() == itemId);
+        items.removeIf(i -> Objects.equals(i.getId(), itemId));
     }
 
     public Item getItemById(int itemId){
         // TODO
-        return items.stream().filter(i -> itemId == i.getId()).findFirst().orElse(null);
+        return items.stream().filter(i -> Objects.equals(itemId, i.getId())).findFirst().orElse(null);
     }
 }
