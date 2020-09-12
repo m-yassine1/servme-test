@@ -1,4 +1,4 @@
-package com.servme.test.part4and5;
+package com.servme.test.part4through7;
 
 import java.util.Objects;
 

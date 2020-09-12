@@ -1,9 +1,9 @@
-package com.servme.test.part4and5;
+package com.servme.test.part4through7;
 
 import java.io.Closeable;
 import java.io.IOException;
 
-import static com.servme.test.part4and5.ItemRepo.unregisterListener;
+import static com.servme.test.part4through7.ItemRepo.unregisterListener;
 
 public interface Listener extends Closeable {
     void itemPut(Item item);
